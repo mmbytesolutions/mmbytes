@@ -1,0 +1,8 @@
+{
+  "name": "mmbyte",
+  "description": "Monorepo for MM Byte Solutions",
+  "version": "0.0.1",
+  "workspaces": [
+    "packages/*"
+  ]
+}
