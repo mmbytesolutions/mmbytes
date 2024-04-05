@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { setContext } from 'svelte'
 	import type { Menu } from './types'
 	import NavigationItem from './navigation-item.svelte'
+	import { createMenu } from './constructor.svelte'
 
-	export let menuItems: Menu[]
+	let { menu = $bindable() }: { menu: Menu[] } = $props()
 
-	let openMenuItem: string | null = null
-	setContext('navigation', {
-		openMenuItem,
-		setOpenMenuItem: (item: string) => {
-			openMenuItem = item
+	let { menu: menuList, openItem, closeItem } = createMenu(menu)
+
+	$effect(() => {
+		if (!menuList.openedItemLabel) {
+			menuList.items.map((item) => (item.isOpen = false))
 		}
 	})
 </script>
@@ -18,9 +18,12 @@
 	class="bg-background flex items-center space-x-1 rounded-md border border-none p-1 shadow-sm"
 	aria-label="Main Navigation">
 	<ul class="flex justify-between space-x-1">
-		{#each menuItems as menu}
+		{#each menuList.items as menuItem, index}
 			<li>
-				<NavigationItem {menu} />
+				<NavigationItem
+					{menuItem}
+					onmouseenter={() => openItem(index)}
+					onmouseleave={() => closeItem(index)} />
 			</li>
 		{/each}
 	</ul>
