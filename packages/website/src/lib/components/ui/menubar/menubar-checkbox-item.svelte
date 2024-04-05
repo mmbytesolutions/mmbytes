@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { Menubar as MenubarPrimitive } from "bits-ui";
-	import Check from "svelte-radix/Check.svelte";
-	import { cn } from "$lib/utils.js";
+	import { Menubar as MenubarPrimitive } from 'bits-ui'
+	import Check from 'svelte-radix/Check.svelte'
+	import { cn } from '$lib/utils.js'
 
-	type $$Props = MenubarPrimitive.CheckboxItemProps;
-	let className: $$Props["class"] = undefined;
-	export { className as class };
-	export let checked: $$Props["checked"] = undefined;
+	type $$Props = MenubarPrimitive.CheckboxItemProps
+	let className: $$Props['class'] = undefined
+	export { className as class }
+	export let checked: $$Props['checked'] = undefined
 </script>
 
 <MenubarPrimitive.CheckboxItem
 	bind:checked
 	class={cn(
-		"relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:opacity-50",
+		'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:opacity-50',
 		className
 	)}
 	{...$$restProps}
