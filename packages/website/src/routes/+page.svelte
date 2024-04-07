@@ -4,7 +4,7 @@
 	import Separator from '$lib/components/ui/separator/separator.svelte'
 	import MegaMenu from '$lib/components/blocks/mega-menu.svelte'
 
-	let menu: Menu[] = [
+	let menuItems: Menu[] = [
 		{
 			label: 'Who We Are',
 			items: [
@@ -44,8 +44,4 @@
 	]
 </script>
 
-<MegaMenu />
-<Separator class="my-10" />
-<Navbar />
-<Separator class="my-10" />
-<Navigation {menu} />
+<Navigation {menuItems} />

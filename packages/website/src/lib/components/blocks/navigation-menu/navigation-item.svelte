@@ -1,29 +1,35 @@
 <script lang="ts">
+	import { index } from './../../../../../.svelte-kit/output/server/nodes/0.js'
 	import { fly } from 'svelte/transition'
 	import { ChevronDown } from 'svelte-radix'
 	import type { MenuItem } from './types'
 	import NavigationSubItem from './navigation-sub-item.svelte'
-
+	import type { HTMLLiAttributes } from 'svelte/elements'
+	import { cn } from '$lib/utils'
+	// extend html buttun attributes to props with MenuItem
 	type Props = {
 		menuItem: MenuItem
-		onmouseenter?: () => void
-		onmouseleave?: () => void
+		[key: string]: HTMLLiAttributes[keyof HTMLLiAttributes]
 	}
 
-	let { menuItem, onmouseenter, onmouseleave }: Props = $props()
+	let { menuItem, ...restProps }: Props = $props()
 </script>
 
-<div class="group/item relative">
+<div class="relative">
 	<button
-		class="hover:bg-accent hover:text-accent-foreground focus:ring-accent group inline-flex items-center rounded-md px-4 py-2 text-sm font-medium focus:outline-none focus:ring-2"
+		class={cn(
+			'inline-flex items-center rounded-md px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-accent'
+		)}
 		aria-expanded={menuItem.isOpen}
 		aria-haspopup="true"
-		{onmouseenter}
-		{onmouseleave}>
+		{...restProps}>
 		{menuItem.label}
 		{#if menuItem.items}
 			<ChevronDown
-				class="ml-1 h-3 w-3 transition duration-150 ease-in-out group-hover:text-gray-500" />
+				class={cn(
+					'ml-1 h-3 w-3 transition duration-150 ease-in-out',
+					menuItem.isOpen && 'rotate-180'
+				)} />
 		{/if}
 	</button>
 
@@ -33,15 +39,13 @@
 			role="menu"
 			aria-orientation="vertical"
 			aria-labelledby={menuItem.label}
-			{onmouseenter}
-			{onmouseleave}
+			{...restProps}
 			transition:fly={{ y: 5, duration: 200 }}>
 			{#each menuItem.items as item}
 				<li>
 					<NavigationSubItem
-						{menuItem}
-						{onmouseenter}
-						{onmouseleave} />
+						{item}
+						{...restProps} />
 				</li>
 			{/each}
 		</ul>
