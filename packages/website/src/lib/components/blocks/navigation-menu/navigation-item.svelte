@@ -18,7 +18,7 @@
 <div class="relative">
 	<button
 		class={cn(
-			'font-medium0 inline-flex items-center rounded-md px-4 py-2 text-sm',
+			'inline-flex items-center rounded-md px-4 py-2 font-semibold',
 			'hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-accent',
 			'cursor-pointer'
 		)}
@@ -29,7 +29,9 @@
 			closeAll()
 		}}
 		{...restProps}>
-		{menuItem.label}
+		<span>
+			{menuItem.label}
+		</span>
 		{#if menuItem.items}
 			<ChevronDown
 				class={cn(
@@ -41,7 +43,7 @@
 
 	{#if menuItem.isOpen && menuItem.items}
 		<ul
-			class="absolute left-0 z-10 mt-1 w-48 origin-top-left rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+			class="absolute left-0 z-10 mt-1 w-48 origin-top-left rounded-md bg-background py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
 			role="menu"
 			aria-orientation="vertical"
 			aria-labelledby={menuItem.label}
