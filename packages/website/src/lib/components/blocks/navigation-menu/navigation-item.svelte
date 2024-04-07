@@ -1,27 +1,33 @@
 <script lang="ts">
-	import { index } from './../../../../../.svelte-kit/output/server/nodes/0.js'
 	import { fly } from 'svelte/transition'
 	import { ChevronDown } from 'svelte-radix'
 	import type { MenuItem } from './types'
 	import NavigationSubItem from './navigation-sub-item.svelte'
 	import type { HTMLLiAttributes } from 'svelte/elements'
 	import { cn } from '$lib/utils'
+	import { goto } from '$app/navigation'
 	// extend html buttun attributes to props with MenuItem
 	type Props = {
 		menuItem: MenuItem
 		[key: string]: HTMLLiAttributes[keyof HTMLLiAttributes]
 	}
 
-	let { menuItem, ...restProps }: Props = $props()
+	let { menuItem, closeAll, ...restProps }: Props = $props()
 </script>
 
 <div class="relative">
 	<button
 		class={cn(
-			'inline-flex items-center rounded-md px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-accent'
+			'font-medium0 inline-flex items-center rounded-md px-4 py-2 text-sm',
+			'hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-accent',
+			'cursor-pointer'
 		)}
 		aria-expanded={menuItem.isOpen}
 		aria-haspopup="true"
+		onclick={() => {
+			menuItem.href ? goto(menuItem.href) : menuItem.action && menuItem.action()
+			closeAll()
+		}}
 		{...restProps}>
 		{menuItem.label}
 		{#if menuItem.items}
@@ -45,6 +51,7 @@
 				<li>
 					<NavigationSubItem
 						{item}
+						{closeAll}
 						{...restProps} />
 				</li>
 			{/each}

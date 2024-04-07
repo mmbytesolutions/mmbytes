@@ -5,7 +5,7 @@
 
 	let { menuItems = $bindable() }: { menuItems: Menu[] } = $props()
 
-	let { menu, openItem, closeItem } = createMenu(menuItems)
+	let { menu, openItem, closeItem, closeAll } = createMenu(menuItems)
 </script>
 
 <nav
@@ -17,7 +17,8 @@
 				<NavigationItem
 					{menuItem}
 					onmouseenter={() => openItem(index)}
-					onmouseleave={() => closeItem(index)} />
+					onmouseleave={() => closeItem(index)}
+					{closeAll} />
 			</li>
 		{/each}
 	</ul>

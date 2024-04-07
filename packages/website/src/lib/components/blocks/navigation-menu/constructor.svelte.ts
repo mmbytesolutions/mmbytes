@@ -27,6 +27,10 @@ function createMenu(initial: Menu[]) {
 				menu.items[index].isOpen = false
 				menu.openedItemLabel = null
 			}, 100)
+		},
+		closeAll: () => {
+			menu.items.map((item) => (item.isOpen = false))
+			menu.openedItemLabel = null
 		}
 	}
 }

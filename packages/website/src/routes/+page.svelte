@@ -1,12 +1,10 @@
 <script lang="ts">
 	import { Navigation, type Menu } from '$lib/components/blocks/navigation-menu'
-	import Navbar from '$lib/components/blocks/navbar.svelte'
-	import Separator from '$lib/components/ui/separator/separator.svelte'
-	import MegaMenu from '$lib/components/blocks/mega-menu.svelte'
 
 	let menuItems: Menu[] = [
 		{
 			label: 'Who We Are',
+			href: '#who-we-are',
 			items: [
 				{ label: 'New Tab' },
 				{ label: 'New Window' },
@@ -24,6 +22,7 @@
 		},
 		{
 			label: 'What We Do',
+			href: '#what-we-do',
 			items: [
 				{ label: 'Undo' },
 				{ label: 'Redo' },
@@ -34,6 +33,7 @@
 		},
 		{
 			label: 'What We Offer',
+			href: '#what-we-offer',
 			items: [
 				{ label: 'Reload' },
 				{ label: 'Force Reload' },

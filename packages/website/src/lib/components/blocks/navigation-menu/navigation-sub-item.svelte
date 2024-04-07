@@ -3,14 +3,16 @@
 	import { ChevronRight } from 'svelte-radix'
 	import type { MenuItem } from './types'
 	import { cn } from '$lib/utils'
+	import { goto } from '$app/navigation'
 
 	type Props = {
 		item: MenuItem
+		closeAll: () => void
 		onmouseenter?: () => void
 		onmouseleave?: () => void
 	}
 
-	let { item, ...restProps }: Props = $props()
+	let { item, closeAll, ...restProps }: Props = $props()
 
 	let isOpen = $state(false)
 </script>
@@ -18,11 +20,18 @@
 {#if item.items}
 	<div class="relative">
 		<button
-			class="flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent"
+			class={cn(
+				'flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 ',
+				'hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent',
+			)}
 			aria-expanded={item.isOpen}
 			aria-haspopup="true"
 			onmouseenter={() => (isOpen = true)}
-			onmouseleave={() => (isOpen = false)}>
+			onmouseleave={() => (isOpen = false)}
+			onclick={() => {
+				item.href ? goto(item.href) : item.action && item.action()
+				closeAll()
+			}}>
 			{item.label}
 			<ChevronRight
 				class={cn(
@@ -46,7 +55,13 @@
 							class={cn(
 								'flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent'
 							)}
-							role="menuitem">
+							role="menuitem"
+							onclick={() => {
+								subItem.href
+									? goto(subItem.href)
+									: subItem.action && subItem.action()
+								closeAll()
+							}}>
 							{subItem.label}
 						</button>
 					</li>
@@ -56,7 +71,7 @@
 	</div>
 {:else}
 	<a
-		href="/#"
+		href={item.href}
 		class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
 		role="menuitem">
 		{item.label}

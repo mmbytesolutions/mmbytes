@@ -1,6 +1,7 @@
 export type MenuItem = {
 	label: string
 	href?: string
+	action?: () => void
 	isOpen?: boolean
 	shortcut?: string
 	items?: MenuItem[]
