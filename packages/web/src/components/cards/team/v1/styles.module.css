@@ -1,0 +1,53 @@
+.social-list {
+  @apply absolute bottom-full left-0 flex w-full flex-col-reverse items-center gap-2.5;
+  transition: all 0.4s cubic-bezier(0.3, 0.02, 0, 0.6);
+  & li {
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+@screen md {
+  .social-list {
+    @apply invisible opacity-0;
+    transform: scale3d(0, 0, 1);
+    transform-origin: bottom;
+    & li {
+      transition-delay: 0s;
+      transform: translateY(-20px);
+      @apply invisible opacity-0;
+    }
+  }
+  .social-hoverable-area {
+    &:hover {
+      > .hover-me {
+        @apply bg-accent-700;
+      }
+      .social-list {
+        visibility: visible;
+        opacity: 1;
+        transform: scaleY(1);
+        li {
+          transform: translateY(0);
+          transition-delay: 0s;
+
+          @apply visible opacity-100;
+          &:nth-child(2) {
+            transition-delay: 0.2s;
+          }
+          &:nth-child(3) {
+            transition-delay: 0.3s;
+          }
+          &:nth-child(4) {
+            transition-delay: 0.4s;
+          }
+          &:nth-child(5) {
+            transition-delay: 0.5s;
+          }
+          &:nth-child(6) {
+            transition-delay: 0.6s;
+          }
+        }
+      }
+    }
+  }
+}

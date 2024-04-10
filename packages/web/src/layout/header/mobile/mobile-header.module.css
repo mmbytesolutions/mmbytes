@@ -1,0 +1,16 @@
+.menu-enter {
+  opacity: 0;
+  height: 0;
+}
+
+.menu-enter-active {
+  opacity: 1;
+  height: 100%;
+  transition: all 200ms ease-out;
+}
+
+.menu-exit-active {
+  opacity: 0;
+  height: 0;
+  transition: all 200ms ease-out;
+}

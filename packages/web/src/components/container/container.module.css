@@ -1,0 +1,46 @@
+/*
+* Custom container
+*/
+.container {
+  /* local variable  */
+  --padding-x: 16px;
+  --padding-left: var(--padding-x);
+  --padding-right: var(--padding-x);
+  --padding: calc(var(--padding-left) + var(--padding-right));
+
+  /* container width and padding*/
+  --container-sm: theme(screens.sm);
+  --container-md: theme(screens.md);
+  --container-lg: theme(screens.lg);
+  --container-xl: theme(screens.xl);
+  --container-2xl: 1290px;
+  --container-width: 100%;
+
+  @apply mx-auto w-full;
+  padding-left: var(--padding-left);
+  padding-right: var(--padding-right);
+  max-width: calc(var(--container-width) + var(--padding));
+
+  &.full-width {
+    @apply max-w-full;
+  }
+  &.no-padding {
+    --padding-x: 0px;
+  }
+
+  @screen sm {
+    --container-width: var(--container-sm);
+  }
+  @screen md {
+    --container-width: var(--container-md);
+  }
+  @screen lg {
+    --container-width: var(--container-lg);
+  }
+  @screen xl {
+    --container-width: var(--container-xl);
+  }
+  @screen 2xl {
+    --container-width: var(--container-2xl);
+  }
+}

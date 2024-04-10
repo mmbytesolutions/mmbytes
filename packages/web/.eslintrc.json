@@ -1,0 +1,17 @@
+{
+  "plugins": ["@typescript-eslint"],
+  "extends": ["next/core-web-vitals", "prettier"],
+  "rules": {
+    "import/no-anonymous-default-export": "off",
+    "react/display-name": "off",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ]
+  }
+}
