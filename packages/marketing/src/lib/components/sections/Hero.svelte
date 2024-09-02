@@ -4,7 +4,6 @@
 	import { Button } from '$lib/components/ui/button';
 	import { ArrowRight } from 'lucide-svelte';
 	import Typewriter from '../typewriter.svelte';
-
 </script>
 
 <section class="w-full py-12 md:py-24 lg:py-32 xl:py-48">
@@ -12,7 +11,20 @@
 		<div class="flex flex-col items-start space-y-4 text-left">
 			<div class="space-y-2" in:fade={{ delay: 200, duration: 600, easing: quintOut }}>
 				<h1 class="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none">
-					<Typewriter />
+					<Typewriter
+						data={{
+							static: 'Transforming {business_type} Through Innovative {service_type}',
+							dynamic: {
+								business_type: ['Startups', 'Enterprises', 'SMBs', 'Non-Profits'],
+								service_type: [
+									'Web Development',
+									'Mobile Apps',
+									'AI Integration',
+									'Process Automation'
+								]
+							}
+						}}
+					/>
 				</h1>
 				<p class="max-w-[700px] text-zinc-200 md:text-xl">
 					Partner with MM Byte Solutions for expert technical consulting and unlock your business

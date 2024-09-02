@@ -1,64 +1,76 @@
-<script>
-  import { onMount } from 'svelte';
-  import Typed from 'typed.js';
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import Typed from 'typed.js';
 
-  export let data = {
-    static: "Transforming {business_type} Through Innovative {service_type}",
-    dynamic: {
-      business_type: ["Startups", "Enterprises", "SMBs", "Non-Profits"],
-      service_type: ["Web Development", "Mobile Apps", "AI Integration", "Process Automation"]
-    }
-  };
+	type DynamicContent = Record<string, string[]>;
 
-  let businessTypeElement;
-  let serviceTypeElement;
-  let businessTypeTyped;
-  let serviceTypeTyped;
+	interface TypewriterData {
+		static: string;
+		dynamic: DynamicContent;
+	}
 
-  onMount(() => {
-    const commonOptions = {
-      typeSpeed: 500,
-      backSpeed: 300,
-      loop: true,
-      smartBackspace: true,
-    };
+	export let data: TypewriterData = {
+		static: 'Transforming {business_type} Through Innovative {service_type}',
+		dynamic: {
+			business_type: ['Startups', 'Enterprises', 'SMBs', 'Non-Profits'],
+			service_type: ['Web Development', 'Mobile Apps', 'AI Integration', 'Process Automation']
+		}
+	};
 
-    businessTypeTyped = new Typed(businessTypeElement, {
-      ...commonOptions,
-      strings: data.dynamic.business_type,
-    });
+	let typedElements: Record<string, HTMLSpanElement> = {};
+	let typedInstances: Record<string, Typed> = {};
 
-    serviceTypeTyped = new Typed(serviceTypeElement, {
-      ...commonOptions,
-      strings: data.dynamic.service_type,
-    });
+	onMount(() => {
+		const commonOptions = {
+			typeSpeed: 100,
+			backSpeed: 30,
+			loop: true,
+			smartBackspace: false,
+			startDelay: 50,
+			backDelay: 5000
+		};
 
-    return () => {
-      if (businessTypeTyped) businessTypeTyped.destroy();
-      if (serviceTypeTyped) serviceTypeTyped.destroy();
-    };
-  });
+		Object.entries(data.dynamic).forEach(([key, values]) => {
+			typedInstances[key] = new Typed(typedElements[key], {
+				...commonOptions,
+				strings: values
+			});
+		});
 
-  function getStaticParts() {
-    return data.static.split(/{business_type}|{service_type}/);
-  }
+		return () => {
+			Object.values(typedInstances).forEach((instance) => instance.destroy());
+		};
+	});
+
+	function getPlaceholderRegex(): RegExp {
+		const placeholders = Object.keys(data.dynamic)
+				.map((key) => `{${key}}`)
+				.join('|');
+		return new RegExp(`(${placeholders})`);
+	}
 </script>
 
-<div>
-  {#each getStaticParts() as part, index}
-    {#if index === 0}
-      {part}
-    {:else if index === 1}
-      {part}<span bind:this={businessTypeElement} class="typed-text"></span>
-    {:else}
-      {part}<span bind:this={serviceTypeElement} class="typed-text"></span>
-    {/if}
-  {/each}
+<div class="typewriter-container">
+	{#each data.static.split(getPlaceholderRegex()) as part}
+		{#if part.startsWith('{') && part.endsWith('}')}
+			{@const key = part.slice(1, -1)}
+			<span bind:this={typedElements[key]} class="typed-text">&nbsp;</span>
+		{:else}
+			<span>{part} &nbsp;</span>
+		{/if}
+	{/each}
 </div>
 
 <style>
-  .typed-text {
-    color: #007bff;
-    font-weight: bold;
-  }
+	.typewriter-container {
+		display: inline-flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+	.typed-text {
+		color: #007bff;
+		font-weight: bold;
+		display: inline-block;
+		min-width: 10px;
+	}
 </style>
