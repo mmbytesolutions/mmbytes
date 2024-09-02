@@ -12,7 +12,7 @@
 		<div class="flex flex-col items-start space-y-4 text-left">
 			<div class="space-y-2" in:fade={{ delay: 200, duration: 600, easing: quintOut }}>
 				<h1 class="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none">
-					<Typewriter strings={['Build', 'Optimize', 'Dream Bigger']} />
+					<Typewriter />
 				</h1>
 				<p class="max-w-[700px] text-zinc-200 md:text-xl">
 					Partner with MM Byte Solutions for expert technical consulting and unlock your business
