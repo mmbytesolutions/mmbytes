@@ -48,6 +48,7 @@
 		"sveltekit-superforms": "^2.17.0",
 		"tailwind-merge": "^2.5.2",
 		"tailwind-variants": "^0.2.1",
+		"typed.js": "^2.1.0",
 		"vaul-svelte": "^0.3.2",
 		"zod": "^3.23.8"
 	}

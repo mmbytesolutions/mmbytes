@@ -1,46 +1,30 @@
-<script lang="ts">
-  import { quintOut } from 'svelte/easing';
-  import { tweened } from 'svelte/motion';
+<script>
+  import { onMount } from 'svelte';
+  import Typed from 'typed.js';
 
-  export let text: string = '';
-  export let delay: number = 0;
-  export let cursor: string = '|';
-  export let cursorSpeed: number = 500;
-  export let typeSpeed: number = 100;
+  /** @type {{strings?: any, typeSpeed?: number, backSpeed?: number, loop?: boolean}} */
+  let {
+    strings = ['Hello, World!', 'Welcome to Svelte!', 'Enjoy the typewriter effect!'],
+    typeSpeed = 50,
+    backSpeed = 50,
+    loop = true
+  } = $props();
 
-  let currentText = '';
-  let isTyping = true;
-  let cursorVisible = true;
+  let element = $state();
 
-  const typewriterText = tweened(text, {
-    duration: text.length * typeSpeed,
-    easing: quintOut,
-    delay,
+  onMount(() => {
+    const typed = new Typed(element, {
+      strings: strings,
+      typeSpeed: typeSpeed,
+      backSpeed: backSpeed,
+      loop: loop,
+    });
+
+    return () => {
+      // Clean up the Typed instance when the component is destroyed
+      typed.destroy();
+    };
   });
-
-  typewriterText.subscribe((value) => {
-    currentText = value;
-    if (value === text) {
-      isTyping = false;
-    }
-  });
-
-  const toggleCursor = () => {
-    cursorVisible = !cursorVisible;
-  };
-
-  const cursorInterval = setInterval(toggleCursor, cursorSpeed);
 </script>
 
-<span>
-  {currentText}
-  {#if isTyping || cursorVisible}
-    <span class="inline-block">{cursor}</span>
-  {/if}
-</span>
-
-<style>
-  span {
-    white-space: pre;
-  }
-</style>
+<span bind:this={element}></span>
