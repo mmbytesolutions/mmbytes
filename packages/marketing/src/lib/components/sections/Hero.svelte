@@ -10,7 +10,7 @@
 	<div class="container flex items-center justify-between px-4 md:px-6">
 		<div class="flex flex-col items-start space-y-4 text-left">
 			<div class="space-y-2" in:fade={{ delay: 200, duration: 600, easing: quintOut }}>
-				<h1 class="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none">
+				<h1 class="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-6xl/none">
 					<Typewriter
 						data={{
 							static: 'Transforming {business_type} Through Innovative {service_type}',
@@ -26,17 +26,17 @@
 						}}
 					/>
 				</h1>
-				<p class="max-w-[700px] text-zinc-200 md:text-xl">
+				<p class="max-w-[700px] text-muted-foreground md:text-xl">
 					Partner with MM Byte Solutions for expert technical consulting and unlock your business
 					potential with custom software, automation, and AI Integration.
 				</p>
 			</div>
 			<div class="space-x-4" in:fly={{ y: 50, delay: 400, duration: 600, easing: quintOut }}>
-				<Button variant="default" class="bg-white text-black hover:bg-zinc-200">
+				<Button class="!bg-primary hover:!bg-primary/90 active:!bg-primary/70">
 					Get Started
 					<ArrowRight class="ml-2 h-4 w-4" />
 				</Button>
-				<Button variant="outline">Learn More</Button>
+				<Button variant="outline" class="!border-primary !text-primary">Learn More</Button>
 			</div>
 		</div>
 

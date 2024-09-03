@@ -52,17 +52,22 @@
 	function getMaxWidth(key: string): string {
 		return `${Math.max(...data.dynamic[key].map(s => s.length))}ch`;
 	}
+
+	function getMaxHeight(): string {
+		const allStrings = Object.values(data.dynamic).flat();
+		return `${Math.max(...allStrings.map(s => s.split('\n').length))}em`;
+	}
 </script>
 
 <div class="typewriter-container">
 	{#each data.static.split(getPlaceholderRegex()) as part}
 		{#if part.startsWith('{') && part.endsWith('}')}
 			{@const key = part.slice(1, -1)}
-			<div style="width: {getMaxWidth(key)};">
-        <span bind:this={typedElements[key]} class="typed-text">&nbsp;</span>
-      </div>
+			<div class="typed-wrapper" style="width: {getMaxWidth(key)}; height: {getMaxHeight()};">
+				<span bind:this={typedElements[key]} class="typed-text"></span>
+			</div>
 		{:else}
-			<span>{part}&nbsp;</span>
+			<span class="static-text">{part}&nbsp;</span>
 		{/if}
 	{/each}
 </div>
@@ -72,13 +77,21 @@
 		display: inline-flex;
 		flex-wrap: wrap;
 		align-items: center;
-		/* font-family: 'Courier New', Courier, monospace; */
+		line-height: 1.2;
 	}
-	.typed-text {
-		color: #007bff;
-		font-weight: bold;
-		display: inline-block;
-		white-space: nowrap;
+	.typed-wrapper {
+		display: inline-flex;
+		align-items: center;
+		justify-content: flex-start;
 		overflow: hidden;
 	}
+	.typed-text {
+		/* color: #007bff; */
+		color: hsl(var(--primary));
+		font-weight: bold;
+		white-space: nowrap;
+	}
+	/* .static-text {
+		white-space: pre;
+	} */
 </style>
