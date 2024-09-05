@@ -6,7 +6,6 @@
   export let width: number = 500;
   export let height: number = 500;
   export let artboard: string | undefined = undefined;
-  export let stateMachines: string | string[] | undefined = 'ATimeline 1';
   export let autoplay: boolean = true;
 
   let canvas: HTMLCanvasElement;
@@ -17,7 +16,6 @@
       src,
       canvas,
       artboard,
-      stateMachines,
       autoplay,
       onLoad: () => {
         riveInstance.resizeDrawingSurfaceToCanvas();
