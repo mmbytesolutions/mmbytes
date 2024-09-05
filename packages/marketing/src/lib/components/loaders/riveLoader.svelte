@@ -1,28 +1,52 @@
 <script lang="ts">
-    import pkg from '@rive-app/canvas';
-	import { onMount } from 'svelte';
-    const { Rive } = pkg;
-  
-    let canvas: HTMLCanvasElement;
-  
-    onMount(() => {
-      const rive = new Rive({
-        src: 'https://cdn.rive.app/animations/vehicles.riv', // Puedes cambiar la URL a cualquier animación de Rive
-        canvas: canvas,
-        autoplay: true,
-      });
-  
-      return () => rive.cleanup();
+  import { onMount, onDestroy } from 'svelte';
+  import * as rive from '@rive-app/canvas';
+
+  export let src: string = 'ns-hero.riv';
+  export let width: number = 500;
+  export let height: number = 500;
+  export let artboard: string | undefined = undefined;
+  export let stateMachines: string | string[] | undefined = 'ATimeline 1';
+  export let autoplay: boolean = true;
+
+  let canvas: HTMLCanvasElement;
+  let riveInstance: rive.Rive;
+
+  onMount(() => {
+    riveInstance = new rive.Rive({
+      src,
+      canvas,
+      artboard,
+      stateMachines,
+      autoplay,
+      onLoad: () => {
+        riveInstance.resizeDrawingSurfaceToCanvas();
+      },
     });
-  </script>
-  
-  <div class="flex justify-center items-center h-screen bg-gray-100">
-    <canvas bind:this={canvas} class="w-1/2 h-1/2"></canvas>
-  </div>
-  
-  <style>
-    canvas {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-  </style>
+
+    const handleResize = () => {
+      riveInstance?.resizeDrawingSurfaceToCanvas();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
+
+  onDestroy(() => {
+    riveInstance?.cleanup();
+  });
+</script>
+
+<canvas bind:this={canvas} {width} {height}></canvas>
+
+<style>
+  canvas {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+  }
+</style>
