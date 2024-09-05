@@ -8,26 +8,18 @@
 </script>
 
 <section class="w-full py-12 md:py-24 lg:py-32 xl:py-48">
-	<div class="container flex items-center justify-between px-4 md:px-6">
-		<div class="flex flex-col items-start space-y-4 text-left">
-			<div class="space-y-2" in:fade={{ delay: 200, duration: 600, easing: quintOut }}>
-				<h1 class="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-6xl/none">
-					<Typewriter
-						data={{
-							static: 'Transforming {business_type} Through Innovative {service_type}',
-							dynamic: {
-								business_type: ['Startups', 'Enterprises', 'SMBs', 'Non-Profits'],
-								service_type: [
-									'Web Development',
-									'Mobile Apps',
-									'AI Integration',
-									'Process Automation'
-								]
-							}
-						}}
-					/>
+	<div class="container flex flex-col items-center justify-between px-4 md:px-6">
+		<div class="flex flex-col items-start space-y-4">
+			<div
+				class="space-y-2 text-center !tracking-wide md:max-w-5xl"
+				in:fade={{ delay: 200, duration: 600, easing: quintOut }}
+			>
+				<h1 class="text-center text-4xl font-bold sm:text-5xl md:text-6xl lg:text-7xl">
+					<Typewriter />
+					<!-- Transforming <span class="text-primary">Startups</span> through Innovative
+					<span class="block text-primary">Web Development</span> -->
 				</h1>
-				<p class="max-w-[700px] text-muted-foreground md:text-xl">
+				<p class="text-muted-foreground md:text-xl">
 					Partner with MM Byte Solutions for expert technical consulting and unlock your business
 					potential with custom software, automation, and AI Integration.
 				</p>
