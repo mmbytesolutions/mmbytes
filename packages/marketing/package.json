@@ -35,6 +35,7 @@
 	"type": "module",
 	"dependencies": {
 		"@internationalized/date": "^3.5.5",
+		"@rive-app/canvas": "^2.20.0",
 		"@selemondev/svelte-marquee": "^0.0.2",
 		"bits-ui": "^0.21.13",
 		"clsx": "^2.1.1",
