@@ -4,6 +4,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { ArrowRight } from 'lucide-svelte';
 	import Typewriter from '../typewriter.svelte';
+	import RiveLoader from '../loaders/riveLoader.svelte';
 </script>
 
 <section class="w-full py-12 md:py-24 lg:py-32 xl:py-48">
@@ -41,6 +42,6 @@
 		</div>
 
 		<!-- Space for Rive animation -->
-		<div class="w-1/2 max-w-lg flex-shrink-0"></div>
+		<div class="w-1/2 max-w-lg flex-shrink-0"><RiveLoader /></div>
 	</div>
 </section>
