@@ -1,50 +1,60 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
-  import * as rive from '@rive-app/canvas';
+	import { onMount, onDestroy } from 'svelte';
+	import * as rive from '@rive-app/canvas';
+	import { fade } from 'svelte/transition';
+	import { cn } from '@/utils';
 
-  export let src: string = 'ns-hero.riv';
-  export let width: number = 500;
-  export let height: number = 500;
-  export let artboard: string | undefined = undefined;
-  export let autoplay: boolean = true;
+	interface Props {
+		src?: string;
+		width?: number;
+		height?: number;
+		artboard?: string | undefined;
+		autoplay?: boolean;
+		class?: string | string[];
+	}
 
-  let canvas: HTMLCanvasElement;
-  let riveInstance: rive.Rive;
+	let {
+		src = 'ns-hero.riv',
+		width = 500,
+		height = 500,
+		artboard = undefined,
+		autoplay = true,
+		class: className = ''
+	}: Props = $props();
 
-  onMount(() => {
-    riveInstance = new rive.Rive({
-      src,
-      canvas,
-      artboard,
-      autoplay,
-      onLoad: () => {
-        riveInstance.resizeDrawingSurfaceToCanvas();
-      },
-    });
+	let canvas = $state() as HTMLCanvasElement;
+	let riveInstance: rive.Rive;
+	let isLoaded = $state(false);
 
-    const handleResize = () => {
-      riveInstance?.resizeDrawingSurfaceToCanvas();
-    };
+	onMount(() => {
+		isLoaded = true;
+		riveInstance = new rive.Rive({
+			src,
+			canvas,
+			artboard,
+			autoplay,
+			onLoad: () => {
+				riveInstance.resizeDrawingSurfaceToCanvas();
+			}
+		});
 
-    window.addEventListener('resize', handleResize);
+		const handleResize = () => {
+			riveInstance?.resizeDrawingSurfaceToCanvas();
+		};
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  });
+		window.addEventListener('resize', handleResize);
+		console.log('loaded');
 
-  onDestroy(() => {
-    riveInstance?.cleanup();
-  });
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	});
+
+	onDestroy(() => {
+		riveInstance?.cleanup();
+	});
 </script>
 
-<canvas bind:this={canvas} {width} {height}></canvas>
-
-<style>
-  canvas {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-  }
-</style>
+<div class={cn(className)}>
+	<canvas class="max-h-[50vh] w-full" bind:this={canvas} {width} {height}></canvas>
+</div>

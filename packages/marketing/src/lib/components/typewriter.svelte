@@ -22,7 +22,7 @@
 		}
 	};
 
-	let { content = defaultContent, class: className = '', layout = 'default' }: Props = $props();
+	let { content = defaultContent, class: className = '', layout = 'centered' }: Props = $props();
 
 	let typedElements: Record<string, HTMLAnchorElement> = $state({});
 	let typedInstances: Record<string, Typed> = $state({});
@@ -92,8 +92,8 @@
 			{@const key = part.slice(1, -1)}
 			<div
 				class={cn(
-					'inline-flex items-center justify-center overflow-hidden',
-					layout === 'centered' ? 'text-center' : 'text-left'
+					'inline-flex items-center overflow-hidden',
+					layout === 'centered' ? 'text-center justify-center' : 'text-left'
 				)}
 				style:width={getMaxWidth(key)}
 				style:height={getMaxHeight()}
@@ -104,14 +104,15 @@
 					bind:this={typedElements[key]}
 					data-key={key}
 					class={cn(
-						'w-full whitespace-nowrap font-bold text-primary',
+						'whitespace-nowrap font-bold text-primary',
 						'underline decoration-primary/50 decoration-2 underline-offset-4',
-						'md:hover:cursor-pointer md:hover:decoration-primary/100'
+						'md:hover:cursor-pointer md:hover:decoration-primary/100',
+						layout === 'centered' && 'w-full'
 					)}
 				></a>
 			</div>
 		{:else}
-			<span class="static-text">{part}&nbsp;</span>
+			<span class="static-text">{part}</span>{#if layout !== 'centered'}&nbsp;{/if}
 		{/if}
 	{/each}
 </div>
